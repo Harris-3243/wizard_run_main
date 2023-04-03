@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/portals.png" type="Texture" id=1]
+[ext_resource path="res://portal.gd" type="Script" id=2]
+[ext_resource path="res://portal_particles.tscn" type="PackedScene" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 162, 384 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 162, 0, 162, 384 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 324, 0, 162, 384 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 486, 0, 162, 384 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 7.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 71.06
+height = 156.21
+
+[node name="Area2D" type="Area2D"]
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 5 )
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 6 )
+
+[node name="portal_particles" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -20 )
+
+[connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]
